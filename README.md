@@ -1,4 +1,4 @@
-# ts-template
+# @simwai/utils
 
 > A comprehensive TypeScript utility library for robust logging and retry mechanisms.
 
