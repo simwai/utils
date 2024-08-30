@@ -1,0 +1,123 @@
+{
+  "name": "utils",
+  "version": "1.0.0",
+  "description": "",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "always-debug": "npx tsx watch --ignore ./test --inspect --trace-warnings ./src/index.ts",
+    "debug": "npx tsx --inspect --trace-warnings ./src/index.ts",
+    "format": "npx xo --fix --prettier",
+    "lint": "npx xo --fix",
+    "start": "npx tsx src/index.ts",
+    "stop-debug": "npx fkill node.exe --force",
+    "test": "npx rimraf ./build && npx tsc && npx ava",
+    "prepare": "npx husky"
+  },
+  "keywords": [
+    "ts"
+  ],
+  "author": "simwai",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "luxon": "^3.5.0",
+    "neverthrow": "^7.0.1",
+    "upgrade": "^1.1.0"
+  },
+  "devDependencies": {
+    "@ava/typescript": "^5.0.0",
+    "@sindresorhus/tsconfig": "^5.0.0",
+    "@types/luxon": "^3.4.2",
+    "@types/sinon": "^17.0.3",
+    "ava": "^5.3.1",
+    "fkill-cli": "^8.0.0",
+    "husky": "^9.0.11",
+    "nodemon": "^3.1.0",
+    "rimraf": "^6.0.1",
+    "sinon": "^18.0.0",
+    "taskkill": "^5.0.0",
+    "tsx": "^4.9.3",
+    "typescript": "^5.4.5",
+    "xo": "^0.26.1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "xo": {
+    "envs": [
+      "es2022",
+      "browser"
+    ],
+    "prettier": true,
+    "ignore": "./build, ./node_modules",
+    "extensions": [
+      ".ts"
+    ],
+    "files": [
+      "./src/**/*.ts"
+    ],
+    "ava": {
+      "files": [
+        "./src/test/**/*.test.ts"
+      ],
+      "typescript": {
+        "rewritePaths": {
+          "src/": "build/"
+        },
+        "compile": false
+      },
+      "concurrency": 5,
+      "failFast": false,
+      "failWithoutAssertions": false,
+      "verbose": true
+    },
+    "rules": {
+      "@typescript-eslint/ban-types": "off",
+      "@typescript-eslint/consistent-type-imports": "off",
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/prefer-promise-reject-errors": "off",
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          "selector": [
+            "memberLike",
+            "method"
+          ],
+          "modifiers": [
+            "private"
+          ],
+          "format": [
+            "camelCase"
+          ],
+          "leadingUnderscore": "require"
+        },
+        {
+          "selector": "variable",
+          "types": [
+            "boolean"
+          ],
+          "format": [
+            "PascalCase"
+          ],
+          "prefix": [
+            "is",
+            "should",
+            "has",
+            "can",
+            "did",
+            "will"
+          ]
+        }
+      ],
+      "import/extensions": "off",
+      "max-params": "off",
+      "new-cap": "off",
+      "no-await-in-loop": "off",
+      "unicorn/numeric-separators-style": "off",
+      "unicorn/prefer-array-some": "off",
+      "unicorn/prefer-module": "off",
+      "ava/use-test": "off"
+    }
+  }
+}
