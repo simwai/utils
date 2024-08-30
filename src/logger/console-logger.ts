@@ -23,7 +23,7 @@ export class ConsoleLogger extends BaseLogger<LoggerOptionsType> {
    * @param {...(string|Error)} content - The content to log, which can be strings or Error objects.
    * @returns {LoggerResult<void>} - A Logger result indicating success or failure.
    */
-  _logMessage(type: LogType, ...content: Array<string | Error>): LoggerResult<void> {
+  protected _logMessage(type: LogType, ...content: Array<string | Error>): LoggerResult<void> {
     const formatResult = this.formatMessage(type, ...content)
 
     if (formatResult.isErr()) {
