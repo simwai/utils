@@ -13,17 +13,31 @@ type RetryOptions = {
  * Class representing a retry mechanism.
  */
 export class Retry {
+  private _timeout: number
+  private _retries: number
+  private _isExponential: boolean
+
+  /**
+   * Constructs a new Retry instance.
+   * @param {RetryOptions} [options] - The retry options.
+   */
+   constructor(options: RetryOptions = {}) {
+    this._timeout = options.timeout ?? 125
+    this._retries = options.retries ?? 4
+    this._isExponential = options.isExponential ?? true
+  }
+
   /**
    * Execute the given invocation with retry logic.
    * @param {Invocation} invocation - The function to be executed.
-   * @param {RetryOptions} [options] - The retry options.
-   * @param {number} [options.timeout=125] - The initial timeout in milliseconds.
-   * @param {number} [options.retries=4] - The number of retry attempts.
-   * @param {boolean} [options.isExponential=true] - Whether to use exponential backoff.
+   * @param {RetryOptions} [overrideOptions] - Options to override the instance settings.
    * @returns {Promise<Result<any, Error>>} The result of the invocation wrapped in a Result object.
    */
-  public static async execute(invocation: Invocation, options: RetryOptions = {}): Promise<Result<any, Error>> {
-    const { timeout = 125, retries = 4, isExponential = true } = options
+  public async execute(invocation: Invocation, overrideOptions: RetryOptions = {}): Promise<Result<any, Error>> {
+    const timeout = overrideOptions.timeout ?? this._timeout
+    const retries = overrideOptions.retries ?? this._retries
+    const isExponential = overrideOptions.isExponential ?? this._isExponential
+
     let _timeout = timeout
     let lastError: Error | null = null
 

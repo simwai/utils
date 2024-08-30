@@ -1,6 +1,7 @@
 # @simwai/utils
 
 ![npm version](https://img.shields.io/npm/v/@simwai/utils?color=purple)
+ ![node version](https://img.shields.io/node/v/@simwai/utils?color=purple)
 
 ```A comprehensive TypeScript utility library for robust logging and retry mechanisms.```
 
@@ -18,6 +19,10 @@ This library provides flexible logging capabilities and a powerful retry utility
 ## Why @simwai/utils?
 
 @simwai/utils is designed with simplicity in mind. It provides essential logging and retry mechanisms that are commonly needed in many projects, saving you the time and effort of reimplementing these functionalities repeatedly. With a clean and minimal API, it's easy to integrate and use in your projects without unnecessary complexity.
+
+## Browser Compatibility
+
+@simwai/utils is primarily designed for Node.js environments. While the ConsoleLogger can work in modern browsers, the FileLogger is not suitable for browser use due to file system access restrictions. The Retry mechanism is compatible with both Node.js and browser environments.
 
 ## Install
 
@@ -72,6 +77,24 @@ if (asyncResult.isOk()) {
 }
 ```
 
+```ts
+// Utilize the default instantiated ConsoleLogger and Retry:
+import utils from '@simwai/utils';
+
+utils.logger.log('This is a log message');
+
+const asyncResult = await utils.retry.execute(
+  async () => { /* Your async operation */ },
+  { timeout: 300, retries: 5 } // Override options
+);
+
+if (asyncResult.isOk()) {
+  console.log('Operation succeeded:', asyncResult.value);
+} else {
+  console.error('Operation failed:', asyncResult.error);
+}
+```ts
+
 ## Error Handling
 
 The Retry mechanism uses the `neverthrow` library to handle errors in a type-safe manner:
@@ -94,7 +117,3 @@ if (result.isOk()) {
   console.error('Operation failed:', result.error);
 }
 ```
-
-## Browser Compatibility
-
-@simwai/utils is primarily designed for Node.js environments. While the ConsoleLogger can work in modern browsers, the FileLogger is not suitable for browser use due to file system access restrictions. The Retry mechanism is compatible with both Node.js and browser environments.
