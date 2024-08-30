@@ -1,5 +1,5 @@
 {
-  "name": "utils",
+  "name": "@simwai/utils",
   "version": "1.0.0",
   "description": "",
   "exports": "./src/index.ts",
@@ -46,7 +46,7 @@
   },
   "xo": {
     "envs": [
-      "es2022",
+      "ES2022",
       "browser"
     ],
     "prettier": true,
