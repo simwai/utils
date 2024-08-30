@@ -11,7 +11,10 @@
     "start": "npx tsx src/index.ts",
     "stop-debug": "npx fkill node.exe --force",
     "test": "npx rimraf ./build && npx tsc && npx ava",
-    "prepare": "npx husky"
+    "prepare": "npx husky",
+    "publish:patch": "npm version patch && npm publish --access=public",
+    "publish:minor": "npm version minor && npm publish --access=public",
+    "publish:major": "npm version major && npm publish --access=public"
   },
   "keywords": [
     "ts"
