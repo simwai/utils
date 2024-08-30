@@ -77,8 +77,8 @@ if (asyncResult.isOk()) {
 }
 ```
 
+Utilize the default instantiated ConsoleLogger and Retry:
 ```ts
-// Utilize the default instantiated ConsoleLogger and Retry:
 import utils from '@simwai/utils';
 
 utils.logger.log('This is a log message');
@@ -93,13 +93,13 @@ if (asyncResult.isOk()) {
 } else {
   console.error('Operation failed:', asyncResult.error);
 }
-```ts
+```
 
 ## Error Handling
 
 The Retry mechanism uses the `neverthrow` library to handle errors in a type-safe manner:
 
-```typescript
+```ts
 import { Retry } from '@simwai/utils';
 
 const result = await Retry.execute(
