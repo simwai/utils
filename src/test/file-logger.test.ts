@@ -31,11 +31,15 @@ testWithContext.before((t) => {
   t.context.fsAppendFileStub = stub(fs, 'appendFileSync')
 })
 
-// Idk why, but this results in an error
-// Removing restore could cause a memory leak -> https://sinonjs.org/releases/latest/general-setup/ ->
-// testWithContext.afterEach((t) => {
-//   t.context.fsAppendFileStub.restore()
-// })
+testWithContext.after.always((t) => {
+  try {
+    if (fs.existsSync(t.context.testFolder)) {
+      fs.rmSync(t.context.testFolder, {recursive: true, force: true})
+    }
+  } catch (error: unknown) {
+    console.error(`Failed to clean up the test folder after tests: `, error)
+  }
+})
 
 testWithContext.serial('FileLogger should log info messages to a file', async (t) => {
   const logger = new FileLogger({ logFilePath: t.context.logFilePath })

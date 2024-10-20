@@ -1,10 +1,11 @@
 import test from 'ava'
 import sinon from 'sinon'
 import { Retry } from '../retry.js'
-const retry = (new Retry).execute
+
+const retryInstance = new Retry()
 
 test('retry succeeds on first try', async (t) => {
-  const result = await retry(() => 'success')
+  const result = await retryInstance.execute(() => 'success')
   t.true(result.isOk())
   t.is(result._unsafeUnwrap(), 'success')
 })
@@ -14,7 +15,7 @@ test('retry retries and succeeds', async (t) => {
   stub.onFirstCall().throws(new Error('Fail'))
   stub.onSecondCall().returns('success')
 
-  const result = await retry(stub, { timeout: 10, retries: 3 })
+  const result = await retryInstance.execute(stub, { timeout: 10, retries: 3 })
   t.true(result.isOk())
   t.is(result._unsafeUnwrap(), 'success')
   t.is(stub.callCount, 2)
@@ -23,7 +24,7 @@ test('retry retries and succeeds', async (t) => {
 test('retry fails after all retries', async (t) => {
   const stub = sinon.stub().throws(new Error('Persistent failure'))
 
-  const result = await retry(stub, { timeout: 10, retries: 2 })
+  const result = await retryInstance.execute(stub, { timeout: 10, retries: 2 })
   t.true(result.isErr())
   t.is(stub.callCount, 2)
 })
@@ -33,7 +34,7 @@ test('retry uses exponential backoff', async (t) => {
   const stub = sinon.stub()
   stub.onThirdCall().returns('success')
 
-  const executePromise = retry(stub, { timeout: 100, retries: 3, isExponential: true })
+  const executePromise = retryInstance.execute(stub, { timeout: 100, retries: 3, isExponential: true })
   await clock.tickAsync(100)
   await clock.tickAsync(200)
   await clock.tickAsync(400)

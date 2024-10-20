@@ -16,6 +16,7 @@
     "stop-debug": "npx fkill node.exe --force",
     "test": "npx rimraf ./build && npx tsc && npx ava",
     "build": "tsc && cpx \"src/**/*.ts\" build",
+    "prepublishOnly": "npm run format && npm run build && npm run test",
     "publish:patch": "npm version patch && npm publish --access=public",
     "publish:minor": "npm version minor && npm publish --access=public",
     "publish:major": "npm version major && npm publish --access=public",
