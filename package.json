@@ -2,19 +2,24 @@
   "name": "@simwai/utils",
   "version": "1.4.0",
   "description": "",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
   "exports": "./src/index.ts",
+  "files": [
+    "build/**/*"
+  ],
   "scripts": {
-    "always-debug": "npx tsx watch --ignore ./test --inspect --trace-warnings ./src/index.ts",
-    "debug": "npx tsx --inspect --trace-warnings ./src/index.ts",
     "format": "npx xo --fix --prettier",
-    "lint": "npx xo --fix",
     "start": "npx tsx src/index.ts",
+    "debug": "npx tsx --inspect --trace-warnings ./src/index.ts",
+    "always-debug": "npx tsx watch --ignore ./test --inspect --trace-warnings ./src/index.ts",
     "stop-debug": "npx fkill node.exe --force",
     "test": "npx rimraf ./build && npx tsc && npx ava",
-    "prepare": "npx husky",
+    "build": "tsc && cpx \"src/**/*.ts\" build",
     "publish:patch": "npm version patch && npm publish --access=public",
     "publish:minor": "npm version minor && npm publish --access=public",
-    "publish:major": "npm version major && npm publish --access=public"
+    "publish:major": "npm version major && npm publish --access=public",
+    "prepare": "npx husky"
   },
   "keywords": [
     "ts"
@@ -25,8 +30,7 @@
   "dependencies": {
     "chalk": "^5.3.0",
     "luxon": "^3.5.0",
-    "neverthrow": "^7.0.1",
-    "upgrade": "^1.1.0"
+    "neverthrow": "^7.0.1"
   },
   "devDependencies": {
     "@ava/typescript": "^5.0.0",
@@ -34,12 +38,11 @@
     "@types/luxon": "^3.4.2",
     "@types/sinon": "^17.0.3",
     "ava": "^5.3.1",
+    "cpx2": "^8.0.0",
     "fkill-cli": "^8.0.0",
     "husky": "^9.0.11",
-    "nodemon": "^3.1.0",
     "rimraf": "^6.0.1",
     "sinon": "^18.0.0",
-    "taskkill": "^5.0.0",
     "tsx": "^4.9.3",
     "typescript": "^5.4.5",
     "xo": "^0.26.1"

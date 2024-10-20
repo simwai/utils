@@ -1,7 +1,7 @@
 import test from 'ava'
 import sinon from 'sinon'
 import { Retry } from '../retry.js'
-const retry = Retry.execute
+const retry = (new Retry).execute
 
 test('retry succeeds on first try', async (t) => {
   const result = await retry(() => 'success')

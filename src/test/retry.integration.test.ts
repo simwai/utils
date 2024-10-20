@@ -1,6 +1,6 @@
 import test from 'ava'
 import { Retry } from '../retry.js'
-const retry = Retry.execute
+const retry = (new Retry).execute
 
 test('retry succeeds with real async operation', async (t) => {
   const result = await retry(async () => {
