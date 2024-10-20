@@ -4,6 +4,7 @@ import process from 'node:process'
 import test, { TestFn } from 'ava'
 import { SinonStub, stub } from 'sinon'
 import { FileLogger } from '../logger/file-logger.js'
+import { TestHelper } from './test-helper.js'
 
 type MyTestContext = {
   logFilePath: string
@@ -18,27 +19,14 @@ testWithContext.before((t) => {
   t.context.testFolder = 'test-logs'
   t.context.testFile = 'test.log'
 
-  try {
-    if (fs.existsSync(t.context.testFolder)) {
-      fs.rmSync(t.context.testFolder, {recursive: true, force: true})
-    }
-  } catch (error: unknown) {
-    console.error(`Failed to clean up the test folder: `, error)
-    throw error // Re-throw the error to fail the test setup
-  }
+  TestHelper.cleanUp(t.context.testFolder)
 
   t.context.logFilePath = path.join(process.cwd(), t.context.testFolder, t.context.testFile)
   t.context.fsAppendFileStub = stub(fs, 'appendFileSync')
 })
 
 testWithContext.after.always((t) => {
-  try {
-    if (fs.existsSync(t.context.testFolder)) {
-      fs.rmSync(t.context.testFolder, {recursive: true, force: true})
-    }
-  } catch (error: unknown) {
-    console.error(`Failed to clean up the test folder after tests: `, error)
-  }
+  TestHelper.cleanUp(t.context.testFolder)
 })
 
 testWithContext.serial('FileLogger should log info messages to a file', async (t) => {

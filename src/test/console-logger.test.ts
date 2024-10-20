@@ -1,7 +1,7 @@
 import test, { TestFn } from 'ava'
 import { SinonStub, stub } from 'sinon'
 import { ConsoleLogger } from '../logger/console-logger.js'
-import { TestHelpers as helper } from './test-helpers.js' // eslint-disable-line ava/no-import-test-files
+import { TestHelper as helper } from './test-helper.js' // eslint-disable-line ava/no-import-test-files
 
 type MyTestContext = {
   consoleLogStub: SinonStub
@@ -17,13 +17,6 @@ testWithContext.before((t) => {
   t.context.consoleErrorStub = stub(console, 'error')
   t.context.consoleWarnStub = stub(console, 'warn')
   t.context.consoleTraceStub = stub(console, 'trace')
-})
-
-testWithContext.afterEach((t) => {
-  t.context.consoleLogStub.restore()
-  t.context.consoleErrorStub.restore()
-  t.context.consoleWarnStub.restore()
-  t.context.consoleTraceStub.restore()
 })
 
 testWithContext('ConsoleLogger.log should log messages with correct color', (t) => {
