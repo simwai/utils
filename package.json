@@ -68,7 +68,8 @@
   },
   "xo": {
     "envs": [
-      "ES2022",
+      "es2022",
+      "node",
       "browser"
     ],
     "prettier": true,
