@@ -19,8 +19,6 @@ testWithContext.before((t) => {
   t.context.testFolder = 'test-logs'
   t.context.testFile = 'test.log'
 
-  TestHelper.cleanUp(t.context.testFolder)
-
   t.context.logFilePath = path.join(process.cwd(), t.context.testFolder, t.context.testFile)
   t.context.fsAppendFileStub = stub(fs, 'appendFileSync')
 })
