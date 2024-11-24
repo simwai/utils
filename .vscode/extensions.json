@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "samverschueren.linter-xo",
-    "vivaxy.vscode-conventional-commits"
+    "vivaxy.vscode-conventional-commits",
+    "editorconfig.editorconfig"
   ]
 }
