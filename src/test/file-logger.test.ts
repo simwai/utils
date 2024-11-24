@@ -25,6 +25,8 @@ testWithContext.before((t) => {
 
 testWithContext.after.always((t) => {
   TestHelper.cleanUp(t.context.testFolder)
+  // Delete logs folder if empty
+  TestHelper.cleanUp('logs')
 })
 
 testWithContext.serial('FileLogger should log info messages to a file', async (t) => {
