@@ -35,23 +35,23 @@ testWithContext.serial('FileLogger should log info messages to a file', async (t
   const result = logger.log(message)
 
   t.true(result.isOk())
-  t.true(t.context.fsAppendFileStub.called);
+  t.true(t.context.fsAppendFileStub.called)
 
   const loggedMessage = t.context.fsAppendFileStub.firstCall.args[1] as string
   t.regex(loggedMessage, /\[LOG]: Info message/)
 })
 
 testWithContext.serial('FileLogger should log error messages to a file', async (t) => {
-  const logger = new FileLogger({ logFilePath: t.context.logFilePath });
-  const error = new Error('Error message');
-  const result = logger.error(error);
+  const logger = new FileLogger({ logFilePath: t.context.logFilePath })
+  const error = new Error('Error message')
+  const result = logger.error(error)
 
-  t.true(result.isOk());
-  t.true(t.context.fsAppendFileStub.called);
+  t.true(result.isOk())
+  t.true(t.context.fsAppendFileStub.called)
 
   // Retrieve the logged message from the first call to fs.appendFileSync
-  const loggedMessage = t.context.fsAppendFileStub.lastCall.args[1] as string;
-  t.regex(loggedMessage, /\[ERROR]: Error message(.*)/);
+  const loggedMessage = t.context.fsAppendFileStub.lastCall.args[1] as string
+  t.regex(loggedMessage, /\[ERROR]: Error message(.*)/)
 })
 
 testWithContext.serial('FileLogger should handle multiple messages', async (t) => {
@@ -60,7 +60,7 @@ testWithContext.serial('FileLogger should handle multiple messages', async (t) =
   const result = logger.log(...messages)
 
   t.true(result.isOk())
-  t.true(t.context.fsAppendFileStub.called);
+  t.true(t.context.fsAppendFileStub.called)
 
   const loggedMessage = t.context.fsAppendFileStub.lastCall.args[1] as string
   t.regex(loggedMessage, /\[LOG]: Message 1 Message 2(.*)/)
@@ -72,7 +72,7 @@ testWithContext.serial('FileLogger should create log file in specified path', as
   const result = logger.log(message)
 
   t.true(result.isOk())
-  t.true(t.context.fsAppendFileStub.called);
+  t.true(t.context.fsAppendFileStub.called)
 
   const loggedFilePath = t.context.fsAppendFileStub.lastCall.args[0] as string
   t.is(loggedFilePath, t.context.logFilePath)

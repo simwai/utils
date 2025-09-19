@@ -24,18 +24,6 @@ export class FileLogger extends BaseLogger<FileLoggerOptionsType> {
   }
 
   /**
-   * Creates the folder for the log file if it does not already exist.
-   * This method ensures that the directory structure is created recursively.
-   * @private
-   */
-  private _createFolder() {
-    const directory = path.dirname(this._logFilePath)
-    if (!fs.existsSync(directory)) {
-      fs.mkdirSync(directory, { recursive: true })
-    }
-  }
-
-  /**
    * Logs a message to the file.
    * @param {LogType} type - The type of log message (e.g., info, error).
    * @param {...(string | Error)} content - The content of the log message.
@@ -54,6 +42,18 @@ export class FileLogger extends BaseLogger<FileLoggerOptionsType> {
       return ok(undefined)
     } catch (error) {
       return err(error instanceof Error ? error : new Error('Failed to log message'))
+    }
+  }
+
+  /**
+   * Creates the folder for the log file if it does not already exist.
+   * This method ensures that the directory structure is created recursively.
+   * @private
+   */
+  private _createFolder() {
+    const directory = path.dirname(this._logFilePath)
+    if (!fs.existsSync(directory)) {
+      fs.mkdirSync(directory, { recursive: true })
     }
   }
 }

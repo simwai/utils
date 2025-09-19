@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 /* eslint-disable unicorn/no-static-only-class */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs'
+import * as path from 'node:path'
 
 /**
  * A utility class for test helpers.
@@ -27,17 +27,18 @@ export class TestHelper {
    * @param {object} t - The test context object.
    * @throws {Error} If the cleanup process fails.
    */
-  static cleanUp = (testFolder: string ): void => {
+  static cleanUp = (testFolder: string): void => {
     try {
       if (fs.existsSync(testFolder)) {
         const files = fs.readdirSync(testFolder)
         for (const file of files) {
           fs.unlinkSync(path.join(testFolder, file))
         }
+
         fs.rmdirSync(testFolder)
       }
     } catch (error: unknown) {
-      console.error(`Failed to clean up the test folder: `, error)
+      console.error(`Failed to clean up the test folder:`, error)
       throw error // Re-throw the error to fail the test setup
     }
   }

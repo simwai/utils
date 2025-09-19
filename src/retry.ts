@@ -13,15 +13,15 @@ type RetryOptions = {
  * Class representing a retry mechanism.
  */
 export class Retry {
-  private _timeout: number
-  private _retries: number
-  private _isExponential: boolean
+  private readonly _timeout: number
+  private readonly _retries: number
+  private readonly _isExponential: boolean
 
   /**
    * Constructs a new Retry instance.
    * @param {RetryOptions} [options] - The retry options.
    */
-   constructor(options: RetryOptions = {}) {
+  constructor(options: RetryOptions = {}) {
     this._timeout = options.timeout ?? 125
     this._retries = options.retries ?? 4
     this._isExponential = options.isExponential ?? true
@@ -39,7 +39,7 @@ export class Retry {
     const isExponential = overrideOptions.isExponential ?? this._isExponential
 
     let _timeout = timeout
-    let lastError: Error | null = null
+    let lastError: Error | undefined
 
     for (let i = 0; i < retries; i++) {
       try {
@@ -57,7 +57,7 @@ export class Retry {
       }
     }
 
-    if (lastError !== null) {
+    if (lastError !== undefined) {
       return err(lastError)
     }
 

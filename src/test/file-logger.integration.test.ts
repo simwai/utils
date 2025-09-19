@@ -34,8 +34,8 @@ testWithContext('FileLogger should log info messages to a file', async (t) => {
   const result = logger.log(message)
 
   t.true(result.isOk())
-  
-  const logContent = fs.readFileSync(t.context.logFilePath, 'utf-8')
+
+  const logContent = fs.readFileSync(t.context.logFilePath, 'utf8')
   t.regex(logContent, /\[LOG]: Info message/)
 })
 
@@ -46,7 +46,7 @@ testWithContext('FileLogger should log error messages to a file', async (t) => {
 
   t.true(result.isOk())
 
-  const logContent = fs.readFileSync(t.context.logFilePath, 'utf-8')
+  const logContent = fs.readFileSync(t.context.logFilePath, 'utf8')
   t.regex(logContent, /\[ERROR]: Error message(.*)/)
 })
 
@@ -57,7 +57,7 @@ testWithContext('FileLogger should handle multiple messages', async (t) => {
 
   t.true(result.isOk())
 
-  const logContent = fs.readFileSync(t.context.logFilePath, 'utf-8')
+  const logContent = fs.readFileSync(t.context.logFilePath, 'utf8')
   t.regex(logContent, /\[LOG]: Message 1 Message 2(.*)/)
 })
 

@@ -8,6 +8,7 @@ enum DraculaColors {
   Trace = '#bd93f9', // Purple
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const DraculaColorPalette = {
   log: chalk.hex(DraculaColors.Log),
   warn: chalk.hex(DraculaColors.Warn),

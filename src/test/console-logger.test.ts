@@ -1,7 +1,7 @@
 import test, { TestFn } from 'ava'
 import { SinonStub, stub } from 'sinon'
 import { ConsoleLogger } from '../logger/console-logger.js'
-import { TestHelper as helper } from './test-helper.js' // eslint-disable-line ava/no-import-test-files
+import { TestHelper as helper } from './test-helper.js'
 
 type MyTestContext = {
   consoleLogStub: SinonStub

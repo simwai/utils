@@ -1,9 +1,4 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-# Instruct the color library to enable color output regardless of the environment.
-export FORCE_COLOR=1
-
 # Store the original commit message
 COMMIT_MSG_FILE="$GIT_DIR/COMMIT_EDITMSG"
 if [ -f "$COMMIT_MSG_FILE" ]; then
@@ -13,14 +8,13 @@ else
 fi
 
 # Check if test files exist
-TEST_FILES=$(find ../src -name '*.test.js' -o -name '*.spec.js' | wc -l)
+TEST_FILES=$(find ../src -name '*.test.ts' -o -name '*.spec.ts' | wc -l)
 
 if [ "$TEST_FILES" -gt 0 ]; then
   # Exit if tests fail
   npm run test || exit 1
 fi
 
-# Format JavaScript code
 npm run format
 
 # Stage any changes made by formatting
