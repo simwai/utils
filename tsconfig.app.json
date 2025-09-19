@@ -1,0 +1,18 @@
+{
+    "extends": "@sindresorhus/tsconfig",
+    "compilerOptions": {
+        "outDir": "build",
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "erasableSyntaxOnly": false,
+        "strictNullChecks": true,
+        "noErrorTruncation": true,
+        "noEmit": false,
+        "composite": true
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}
