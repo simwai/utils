@@ -8,4 +8,5 @@ export default myExport
 
 export { ConsoleLogger } from './logger/console-logger.js'
 export { Retry } from './retry.js'
-export { FileLogger } from './logger/file-logger.js'
+
+// Note: FileLogger is not available in browser builds as it requires Node.js file system APIs
