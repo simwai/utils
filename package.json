@@ -24,7 +24,7 @@
     "format": "xo . --fix --prettier",
     "start": "tsx src/index.ts",
     "debug": "tsx --inspect --trace-warnings ./src/index.ts",
-    "always-debug": "npm run stop-debug && tsx watch --ignore ./test --inspect --trace-warnings ./src/index.ts",
+    "always-debug": "tsx watch --ignore ./test --inspect --trace-warnings ./src/index.ts",
     "stop-debug": "fkill node.exe --force",
     "test": "npm run build && ava",
     "build": "unbuild",
