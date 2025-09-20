@@ -1,7 +1,7 @@
 {
     "extends": "@sindresorhus/tsconfig",
     "compilerOptions": {
-        "outDir": "build",
+        "outDir": "./build",
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,
@@ -14,5 +14,8 @@
     },
     "include": [
         "./src/**/*"
+    ],
+    "exclude": [
+        "./src/test/**/*.ts"
     ]
 }

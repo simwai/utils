@@ -27,7 +27,7 @@
     "debug": "tsx --inspect --trace-warnings ./src/index.ts",
     "always-debug": "tsx watch --ignore ./test --inspect --trace-warnings ./src/index.ts",
     "stop-debug": "fkill node.exe --force",
-    "test": "npm run build && ava",
+    "test": "ava",
     "build": "unbuild",
     "pre-publish": "npm run format && npm run test",
     "publish:patch": "npm version patch && npm publish --access=public",
@@ -74,14 +74,10 @@
     ],
     "typescript": {
       "rewritePaths": {
-        "src/": "build/"
+        "src/": "test-build/"
       },
       "compile": false
-    },
-    "concurrency": 5,
-    "failFast": false,
-    "failWithoutAssertions": false,
-    "verbose": true
+    }
   },
   "xo": {
     "space": true,
