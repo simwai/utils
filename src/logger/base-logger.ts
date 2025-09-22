@@ -45,7 +45,7 @@ export abstract class BaseLogger<T extends LoggerOptionsType> extends LoggerInte
    * @param {...string} content - The content to log.
    * @returns {LoggerResult<void>} The result of the logging operation.
    */
-  public trace(...content: string[]): LoggerResult<void> {
+  public trace(...content: Array<string | Error>): LoggerResult<void> {
     return this._logMessage('trace', ...content)
   }
 
