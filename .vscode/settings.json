@@ -17,5 +17,6 @@
   "files.eol": "\n",
   "xo.options": {
     "ignores": "./**/*.js"
-  }
+  },
+  "conventionalCommits.gitmoji": true,
 }
