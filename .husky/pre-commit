@@ -1,28 +1,44 @@
-#!/usr/bin/env sh
-# Store the original commit message
-COMMIT_MSG_FILE="$GIT_DIR/COMMIT_EDITMSG"
-if [ -f "$COMMIT_MSG_FILE" ]; then
-  COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
-else
-  COMMIT_MSG=""
+#!/usr/bin/env bash
+set -e # Exit immediately if a command exits with a non-zero status.
+
+# Step 1: Handle the commit message correctly.
+# The COMMIT_EDITMSG file only exists for an amend or if a message was passed with -m.
+COMMIT_MSG_FILE="$1" # Git passes the path to the message file as the first argument.
+COMMIT_MSG=""
+if [ -n "$COMMIT_MSG_FILE" ] && [ -f "$COMMIT_MSG_FILE" ]; then
+    COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
 fi
 
-# Check if test files exist
-TEST_FILES=$(find ../src -name '*.test.ts' -o -name '*.spec.ts' | wc -l)
-
-if [ "$TEST_FILES" -gt 0 ]; then
-  # Exit if tests fail
-  npm run test || exit 1
+# Step 2: Run tests only if test files exist.
+# Using find with a subshell is safer than parsing 'wc -l' output.
+REPO_ROOT=$(git rev-parse --show-toplevel)
+if [ -n "$(find "$REPO_ROOT/src" -name '*.test.ts' -o -name '*.spec.ts' -print -quit 2>/dev/null)" ]; then
+    echo "Running tests..."
+    npm run test || exit 1
 fi
 
+# Step 3: Capture the list of originally staged files.
+# This is the core of our safe logic.
+STAGED_FILES_CMD="git diff --cached --name-only --diff-filter=ACM"
+
+# Step 4: Run the formatter.
+echo "Running formatter..."
 npm run format
 
-# Stage any changes made by formatting
-if ! git diff --quiet; then
-  git add -u
+# Step 5: Re-stage ONLY the originally staged files that were modified.
+echo "Re-staging modified files..."
+$STAGED_FILES_CMD | while IFS= read -r filename; do
+    # Check if the file still exists and has been modified by the formatter
+    if [ -f "$filename" ]; then
+        git add "$filename"
+    fi
+done
 
-  # Reapply the original commit message to the new staged changes
-  if [ -n "$COMMIT_MSG" ]; then
+# Step 6: Re-apply the original commit message if it existed.
+# This prevents the commit from aborting if the message was changed.
+if [ -n "$COMMIT_MSG" ]; then
     echo "$COMMIT_MSG" > "$COMMIT_MSG_FILE"
-  fi
 fi
+
+echo "Pre-commit checks passed!"
+exit 0
